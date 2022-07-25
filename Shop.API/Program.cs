@@ -1,9 +1,15 @@
+using Core.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 // Add services to the container.
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString("SqlConnectionString")));
 
@@ -14,12 +20,28 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var services = scope.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+    try
+    {
+        var context = services.GetRequiredService<DataContext>();
+        await context.Database.MigrateAsync();
+        await DataContaxtSeed.SeedAsync(context, loggerFactory);
+    }
+    catch (Exception ex)
+    {
+        app.Logger.LogError(ex, "An error occured during migration");
+        throw;
+    }
 }
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
 
 app.UseHttpsRedirection();
 
