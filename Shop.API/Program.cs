@@ -2,6 +2,8 @@ using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using Shop.API.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -9,7 +11,9 @@ var configuration = builder.Configuration;
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+//builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+builder.Services.AddAutoMapper(typeof(AutomapperProfile));
 // Add services to the container.
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString("SqlConnectionString")));
 
@@ -44,6 +48,8 @@ using (var scope = app.Services.CreateScope())
     }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
 
 app.UseAuthorization();
 
