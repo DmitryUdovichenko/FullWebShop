@@ -5,6 +5,7 @@ using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
 using Shop.API.Dtos;
 using Shop.API.Errors;
+using Shop.API.Helpers;
 
 namespace Shop.API.Controllers
 {
@@ -28,11 +29,14 @@ namespace Shop.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductReturnDto>>> Get()
+        public async Task<ActionResult<Pagination<ProductReturnDto>>> Get([FromQuery] ProductParams productParams)
         {
-            var spec = new ProductWithSpecification();
+            var spec = new ProductWithSpecification(productParams);
+            var countSpec = new ProductWithFilters(productParams);
+            var totalItems = await _productRepository.CountAsync(countSpec);
             var products = await _productRepository.GetListWithSpecAsync(spec);
-            return Ok(_mapper.Map<IReadOnlyList<ProductReturnDto>>(products));
+            var data = _mapper.Map<IReadOnlyList<ProductReturnDto>>(products);
+            return Ok(new Pagination<ProductReturnDto>(productParams.PageIndex, productParams.PageSize, totalItems, data));
         }
 
         [HttpGet("{id}")]

@@ -2,6 +2,8 @@ namespace Shop.API.Errors
 {
     public class ApiResponse
     {
+        public int StatusCode { get; set; }
+        public string Message { get; set; }
         public ApiResponse(int statusCode, string message = null)
         {
             StatusCode = statusCode;
@@ -19,8 +21,5 @@ namespace Shop.API.Errors
                 _ => null
             };
         }
-
-        public int StatusCode { get; set; }
-        public string Message { get; set; }
     }
 }
