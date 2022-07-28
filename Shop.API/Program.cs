@@ -4,6 +4,7 @@ using Shop.API.Extensions;
 using Shop.API.Mapper;
 using Shop.API.Middleware;
 
+var  CorsPolicy = "AllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
@@ -22,9 +23,9 @@ builder.Services.AddAplictionServices();
 builder.Services.AddSwaggerDocumentation();
 builder.Services.AddCors(options => 
 {
-    options.AddPolicy("CorsPolicy", policy => 
+    options.AddPolicy(name: CorsPolicy, policy => 
     {
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+        policy.WithOrigins("https://localhost:4200").AllowAnyHeader().AllowAnyMethod();
     });
 });
 var app = builder.Build();
@@ -60,7 +61,7 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
  
-app.UseCors("CorsPolicy");
+app.UseCors(CorsPolicy);
 
 app.UseAuthorization();
 
