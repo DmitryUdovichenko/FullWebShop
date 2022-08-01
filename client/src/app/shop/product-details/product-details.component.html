@@ -1,0 +1,24 @@
+<div class="container" *ngIf="product">
+    <div class="row">
+        <div class="col-3">
+            <img class="image-fluid w-100" src="{{product.imageUrl}}" alt="">
+            <div>
+                <h3 class="price me-auto">{{product.price | currency}}</h3>
+            </div>
+            <div>
+                <i class="fa fa-minus"></i>
+                <span>1</span>
+                <i class="fa fa-plus"></i>
+            </div>
+            <div>
+                <button type="button" class="btn btn-outline-secondary" style="font-size: 1.5em;">Add to cart</button>
+            </div>
+        </div>
+        <div class="col-9">
+            <h2>{{product.name}}</h2>
+            <div>
+                <p>{{product.description}}</p>
+            </div>
+        </div>
+    </div>
+</div>

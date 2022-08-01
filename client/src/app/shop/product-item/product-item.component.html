@@ -7,6 +7,6 @@
     <mat-card-actions class="mt-auto d-flex align-items-center">
       <span class="price me-auto">{{product.price | currency}}</span>
       <button type="button" class="btn btn-outline-secondary fa fa-shopping-cart mx-2" style="font-size: 1.5em;"></button>
-      <button type="button" class="btn btn-outline-secondary">View</button>
+      <button type="button" routerLink = "/shop/{{product.id}}" class="btn btn-outline-secondary">View</button>
     </mat-card-actions>    
 </mat-card>                          
