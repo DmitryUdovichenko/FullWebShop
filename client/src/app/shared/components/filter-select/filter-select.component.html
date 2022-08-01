@@ -1,0 +1,6 @@
+<mat-form-field appearance="fill">
+    <mat-label *ngIf="label">{{label}}</mat-label>
+    <mat-select [(value)]="selectedId" (selectionChange)="onFilterChanged($event.value)">
+      <mat-option *ngFor="let item of items" [value]="item.id">{{item.name}}</mat-option>
+    </mat-select>
+</mat-form-field>

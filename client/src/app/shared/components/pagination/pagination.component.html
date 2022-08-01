@@ -1,0 +1,9 @@
+<div class="row">
+    <mat-paginator 
+      (page)="onPageChanged($event)"
+      [length]="totalCount"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[4, 8, 12, 16]"
+      aria-label="Select page">
+    </mat-paginator>
+</div>

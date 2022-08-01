@@ -25,7 +25,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: CorsPolicy, policy => 
     {
-        policy.WithOrigins("https://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+        policy.WithOrigins("https://localhost:4200","http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
     });
 });
 var app = builder.Build();
@@ -57,7 +57,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseStaticFiles();
  

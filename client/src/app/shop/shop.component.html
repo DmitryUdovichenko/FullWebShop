@@ -1,0 +1,47 @@
+
+<div class="container">
+    <div class="row">
+        <section class="col-12">
+          <app-filter-select
+          [label] = "'Select brand'"
+          [selectedId] = "shopParams.brandId"
+          [items]="brands"
+          (filterChanged)="onBrandSelected($event)"
+          ></app-filter-select>
+
+          <app-filter-select
+          [label] = "'Select type'"
+          [selectedId] = "shopParams.typeId"
+          [items]="types"
+          (filterChanged)="onTypeSelected($event)"
+          ></app-filter-select>
+
+          <div>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Search</mat-label>
+              <input (keyup.enter)="onSearch()" type="search" #search matInput placeholder="Search">
+            </mat-form-field>
+            <button mat-icon-button color="primary" (click)="onSearch()" aria-label="Example icon button with a home icon">
+              <mat-icon>search</mat-icon>
+            </button>
+          </div>
+          <div>
+            <mat-button-toggle-group #group="matButtonToggleGroup">
+              <mat-button-toggle *ngFor="let sortType of sortOptions" (value)="sortType.value" (change)="onSortSelected(sortType.value)" >{{sortType.name}}</mat-button-toggle>
+            </mat-button-toggle-group>            
+          </div>
+        </section>
+        <section class="col-12">
+          <div class="row row-cols-1 row-cols-sm-3 row-cols-md-4 g-3 my-3">
+            <div class="col" *ngFor="let product of products"> 
+              <app-product-item [product]="product"></app-product-item>                    
+            </div>
+          </div>
+          <app-pagination
+            [totalCount]="totalCount"
+            [pageSize] = "shopParams.pageSize"
+            (pageChanged)="onChangePage($event)"
+          ></app-pagination>
+        </section>
+    </div>
+</div>
