@@ -14,8 +14,8 @@
         </ul>
       </div>    
       <div class="col-3 d-flex align-items-center justify-content-center">
-          <a href="" class="position-relative me-3">
-              <i class="fa fa-shopping-cart fa-2x text-dark" matBadge="5" matBadgeColor="warn"></i>
+          <a routerLink="/basket" class="position-relative me-3">
+              <i class="fa fa-shopping-cart fa-2x text-dark" [matBadgeHidden]="isHideBadge" matBadge="{{basketCount}}" matBadgeColor="warn"></i>
           </a>
         <button type="button" class="btn btn-outline-primary me-2">Login</button>
         <button type="button" class="btn btn-primary">Sign-up</button>

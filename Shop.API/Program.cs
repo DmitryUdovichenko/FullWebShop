@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Shop.API.Extensions;
 using Shop.API.Mapper;
 using Shop.API.Middleware;
+using StackExchange.Redis;
 
 var  CorsPolicy = "AllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,10 @@ builder.Logging.AddConsole();
 builder.Services.AddAutoMapper(typeof(AutomapperProfile));
 // Add services to the container.
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString("SqlConnectionString")));
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(opt =>
+    ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnectionString")));
+
 
 builder.Services.AddControllers();
 

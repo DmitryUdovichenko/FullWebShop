@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  basketredis:
+    container_name: basketredis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+
+  shopdb:
+    container_name: shopdb
+    environment:
+      SA_PASSWORD: "209D3j3x"
+      ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+      - "1434:1433"
+
+  redis-commander:
+    container_name: redis-admin-container
+    environment:
+      - REDIS_HOSTS=local:basketredis:6379
+      - HTTP_USER=root
+      - HTTP_PASSWORD=secret
+    ports:
+      - 8081:8081
+    depends_on:
+      - basketredis
+      
+volumes:
+  redis-data:

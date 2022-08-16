@@ -1,0 +1,14 @@
+<div *ngIf="(basketTotals$ | async) as totals">
+    <div class="bg-secondary text-white px-3 py-3">
+        <strong>Order Summary</strong>
+    </div>
+    <div class="bg-light px-3 py-3 border-bottom d-flex justify-content-between">
+        <span>Subtotal:</span><strong>{{totals.subTotal | currency}}</strong>
+    </div>
+    <div class="bg-light px-3 py-3 border-bottom d-flex justify-content-between">
+        <span>Shipping:</span><strong>{{totals.shipping | currency}}</strong>
+    </div>
+    <div class="bg-light px-3 py-3 d-flex justify-content-between">
+        <span>Total:</span><strong>{{totals.total | currency}}</strong>
+    </div>
+</div>

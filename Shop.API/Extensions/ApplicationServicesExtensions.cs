@@ -10,6 +10,7 @@ namespace Shop.API.Extensions
         public static IServiceCollection AddAplictionServices(this IServiceCollection services)
         {
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));  
+            services.AddScoped<IBasketRepository, BasketRepository>();
             services.Configure<ApiBehaviorOptions>(o => 
             {
                 o.InvalidModelStateResponseFactory = actionContext => 

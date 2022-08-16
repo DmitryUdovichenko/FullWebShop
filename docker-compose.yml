@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  basketredis:
+    image: redis
+  shopdb:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+

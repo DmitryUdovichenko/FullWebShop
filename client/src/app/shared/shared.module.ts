@@ -9,12 +9,14 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { FilterSelectComponent } from './components/filter-select/filter-select.component';
+import { OrderTotalsComponent } from './components/order-totals/order-totals.component';
 
 
 @NgModule({
   declarations: [
     PaginationComponent,
-    FilterSelectComponent
+    FilterSelectComponent,
+    OrderTotalsComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +37,8 @@ import { FilterSelectComponent } from './components/filter-select/filter-select.
     MatButtonToggleModule,
     MatPaginatorModule,
     PaginationComponent,
-    FilterSelectComponent
+    FilterSelectComponent,
+    OrderTotalsComponent
   ]
 })
 export class SharedModule { }

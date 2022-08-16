@@ -6,12 +6,12 @@
                 <h3 class="price me-auto">{{product.price | currency}}</h3>
             </div>
             <div>
-                <i class="fa fa-minus"></i>
-                <span>1</span>
-                <i class="fa fa-plus"></i>
+                <i (click)="decrementQuantity()" class="fa fa-minus"></i>
+                <span>{{quantity}}</span>
+                <i (click)="incrementQuantity()" class="fa fa-plus"></i>
             </div>
             <div>
-                <button type="button" class="btn btn-outline-secondary" style="font-size: 1.5em;">Add to cart</button>
+                <button type="button" (click)="addToBasket()" class="btn btn-outline-secondary" style="font-size: 1.5em;">Add to cart</button>
             </div>
         </div>
         <div class="col-9">
