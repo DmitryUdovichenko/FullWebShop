@@ -1,5 +1,6 @@
 using Core.Interfaces;
 using Infrastructure.Repositories;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Shop.API.Errors;
 
@@ -9,6 +10,7 @@ namespace Shop.API.Extensions
     {
         public static IServiceCollection AddAplictionServices(this IServiceCollection services)
         {
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));  
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.Configure<ApiBehaviorOptions>(o => 

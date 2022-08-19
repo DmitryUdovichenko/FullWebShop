@@ -1,20 +1,17 @@
-﻿using Core.Entities;
-using Microsoft.EntityFrameworkCore;
+
 using System.Reflection;
+using Core.Entities;
+using Core.Entities.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Data
+namespace Infrastructure.Data.Identity
 {
-    public class DataContext : DbContext
+    public class IdentityContext : IdentityDbContext<User>
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        public IdentityContext(DbContextOptions<IdentityContext> options) : base(options)
         {
-
         }
-
-        public DbSet<Product> Products { get; set; }
-
-        public DbSet<ProductType> ProductTypes { get; set; }
-        public DbSet<ProductBrand> ProductBrands { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

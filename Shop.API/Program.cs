@@ -1,4 +1,7 @@
+using Core.Entities.Identity;
 using Infrastructure.Data;
+using Infrastructure.Data.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shop.API.Extensions;
 using Shop.API.Mapper;
@@ -17,6 +20,7 @@ builder.Logging.AddConsole();
 builder.Services.AddAutoMapper(typeof(AutomapperProfile));
 // Add services to the container.
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString("SqlConnectionString")));
+builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(configuration.GetConnectionString("SqlIdentityConnectionString")));
 
 builder.Services.AddSingleton<IConnectionMultiplexer>(opt =>
     ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnectionString")));
@@ -25,6 +29,7 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(opt =>
 builder.Services.AddControllers();
 
 builder.Services.AddAplictionServices();
+builder.Services.AddIdentityServices(configuration);
 builder.Services.AddSwaggerDocumentation();
 builder.Services.AddCors(options => 
 {
@@ -33,6 +38,8 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("https://localhost:4200","http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
     });
 });
+
+    
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -44,6 +51,11 @@ using (var scope = app.Services.CreateScope())
         var context = services.GetRequiredService<DataContext>();
         await context.Database.MigrateAsync();
         await DataContaxtSeed.SeedAsync(context, loggerFactory);
+
+        var userManager = services.GetRequiredService<UserManager<User>>();
+        var identityContext = services.GetRequiredService<IdentityContext>();
+        await identityContext.Database.MigrateAsync();
+        await IdentityContextSeed.SeedAsync(userManager);
     }
     catch (Exception ex)
     {
@@ -58,6 +70,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwaggerDocumentation();
+
 }
 
 app.UseStatusCodePagesWithReExecute("/errors/{0}");
@@ -67,6 +80,8 @@ app.UseStatusCodePagesWithReExecute("/errors/{0}");
 app.UseStaticFiles();
  
 app.UseCors(CorsPolicy);
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
