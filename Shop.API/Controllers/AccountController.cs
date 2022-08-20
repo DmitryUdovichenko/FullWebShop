@@ -88,6 +88,11 @@ namespace Shop.API.Controllers
         [HttpPost("registration")]
         public async Task<ActionResult<UserDto>> Registration(RegistrationDto registrationUser)
         {
+            if(CheckEmailExistedAsync(registrationUser.Email).Result.Value)
+            {
+                return new BadRequestObjectResult(new ApiValidationErrorResponse{Errors= new []{"Email addres is in use"}});
+            }
+
             var user = new User
             {
                 DisplayName = registrationUser.DisplayName,
