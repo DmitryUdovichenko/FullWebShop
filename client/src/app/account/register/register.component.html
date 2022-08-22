@@ -1,0 +1,14 @@
+<div class="form-register w-100 m-auto text-center">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmitForm()">
+        <h1 class="h3 mb-3 fw-normal">Register</h1>
+        <div>
+            <div class="form-floating" app-text-input formControlName="displayName" [label]="'User name'"></div>
+            <div class="form-floating" app-text-input formControlName="email" [label]="'Email Address'" [type]="'email'"></div>
+            <div class="form-floating" app-text-input formControlName="password" [label]="'Password'"  [type]="'password'"></div>
+        </div>
+        <button [disabled]="registerForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+    </form>
+    <div class="invalid-feedback" *ngIf="errors">
+        <p *ngFor="let error of errors">{{error}}</p>
+    </div>
+</div>

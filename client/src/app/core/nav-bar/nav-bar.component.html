@@ -14,11 +14,30 @@
         </ul>
       </div>    
       <div class="col-3 d-flex align-items-center justify-content-center">
-          <a routerLink="/basket" class="position-relative me-3">
-              <i class="fa fa-shopping-cart fa-2x text-dark" [matBadgeHidden]="isHideBadge" matBadge="{{basketCount}}" matBadgeColor="warn"></i>
-          </a>
-        <button type="button" class="btn btn-outline-primary me-2">Login</button>
-        <button type="button" class="btn btn-primary">Sign-up</button>
+        <a routerLink="/basket" class="position-relative me-3">
+            <i class="fa fa-shopping-cart fa-2x text-dark" [matBadgeHidden]="isHideBadge" matBadge="{{basketCount}}" matBadgeColor="warn"></i>
+        </a>
+        <ng-container *ngIf="(currentUser$ | async) == null">
+          <a routerLink="/account/login" type="button" class="btn btn-outline-primary me-2">Login</a>
+          <a routerLink="/account/register" type="button" class="btn btn-primary">Sign-up</a>
+        </ng-container>
+        <ng-container *ngIf="currentUser$ | async">
+          <button mat-button [matMenuTriggerFor]="menu">{{(currentUser$ | async).displayName}}</button>
+          <mat-menu #menu="matMenu">
+            <a routerLink="/basket" mat-menu-item>
+              <i class="fa fa-shopping-cart mr-3"></i>
+              View Basket
+            </a>
+            <a routerLink="/orders" mat-menu-item>
+              <i class="fa fa-history mr-3"></i>
+              View Orders
+            </a>
+            <a (click)="logout()" routerLink="/basket" mat-menu-item>
+              <i class="fa fa-sign-out mr-3"></i>
+              Logout
+            </a>
+          </mat-menu>
+        </ng-container>
       </div>
     </div>
     </div>

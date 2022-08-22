@@ -1,0 +1,10 @@
+<div class="form-signin w-100 m-auto text-center">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmitForm()">
+        <h1 class="h3 mb-3 fw-normal">Please login</h1>
+        <div>
+          <div class="form-floating" app-text-input formControlName="email" [label]="'Email Address'" [type]="'email'"></div>
+          <div class="form-floating" app-text-input formControlName="password" [label]="'Password'"  [type]="'password'"></div>
+        </div>
+        <button [disabled]="loginForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+    </form>
+</div>

@@ -4,19 +4,22 @@ import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonToggleModule} from '@angular/material/button-toggle'; 
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonToggleModule } from '@angular/material/button-toggle'; 
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { FilterSelectComponent } from './components/filter-select/filter-select.component';
 import { OrderTotalsComponent } from './components/order-totals/order-totals.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatMenuModule} from '@angular/material/menu';
+import { TextInputComponent } from './components/text-input/text-input.component';
 
 @NgModule({
   declarations: [
     PaginationComponent,
     FilterSelectComponent,
-    OrderTotalsComponent
+    OrderTotalsComponent,
+    TextInputComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +29,9 @@ import { OrderTotalsComponent } from './components/order-totals/order-totals.com
     MatInputModule,
     MatIconModule,
     MatButtonToggleModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    ReactiveFormsModule,
+    MatMenuModule
   ],
   exports: [
     MatCardModule,
@@ -38,7 +43,10 @@ import { OrderTotalsComponent } from './components/order-totals/order-totals.com
     MatPaginatorModule,
     PaginationComponent,
     FilterSelectComponent,
-    OrderTotalsComponent
+    OrderTotalsComponent,
+    ReactiveFormsModule,
+    MatMenuModule,
+    TextInputComponent
   ]
 })
 export class SharedModule { }
