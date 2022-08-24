@@ -66,7 +66,7 @@ namespace Infrastructure.Data.Identity.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Address");
+                    b.ToTable("Address", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Identity.User", b =>
