@@ -11,15 +11,21 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { FilterSelectComponent } from './components/filter-select/filter-select.component';
 import { OrderTotalsComponent } from './components/order-totals/order-totals.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { TextInputComponent } from './components/text-input/text-input.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { BasketSummaryComponent } from './components/basket-summary/basket-summary.component'; 
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { StepperComponent } from './components/stepper/stepper.component';
 
 @NgModule({
   declarations: [
     PaginationComponent,
     FilterSelectComponent,
     OrderTotalsComponent,
-    TextInputComponent
+    TextInputComponent,
+    BasketSummaryComponent,
+    StepperComponent,
   ],
   imports: [
     CommonModule,
@@ -31,7 +37,9 @@ import { TextInputComponent } from './components/text-input/text-input.component
     MatButtonToggleModule,
     MatPaginatorModule,
     ReactiveFormsModule,
-    MatMenuModule
+    MatMenuModule,
+    MatRadioModule,
+    CdkStepperModule
   ],
   exports: [
     MatCardModule,
@@ -46,7 +54,11 @@ import { TextInputComponent } from './components/text-input/text-input.component
     OrderTotalsComponent,
     ReactiveFormsModule,
     MatMenuModule,
-    TextInputComponent
+    TextInputComponent,
+    MatRadioModule,
+    BasketSummaryComponent,
+    CdkStepperModule,
+    StepperComponent
   ]
 })
 export class SharedModule { }

@@ -8,7 +8,7 @@ namespace Shop.API.Dtos
         public string DisplayName { get; set; }
         [Required, EmailAddress]
         public string Email { get; set; }
-        [Required, RegularExpression("(?=^.{6,10}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\\s).*$", ErrorMessage = "To weak password")]
+        [Required, RegularExpression("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).{4,8}$", ErrorMessage = "To weak password")]
         public string Password { get; set; }
     }
 }

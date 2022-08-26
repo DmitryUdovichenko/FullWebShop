@@ -1,0 +1,22 @@
+<ng-container *ngIf="basket$ | async">
+    <ul class="list-group">
+        <li *ngFor="let item of (basket$ | async).items" class="list-group-item">
+            <div class="d-flex align-items-center">
+                <img src="{{item.imageUrl}}" alt="" class="col-2" style="height: auto;">
+                <div class="col-5">
+                    <h3 class="m-0">{{item.productName}}</h3>
+                </div>
+                <div class="col-1 text-center">{{item.price | currency}}</div>
+                <div class="col-2 text-center">
+                    <div>
+                        <i *ngIf="isBasket" (click)="decrementItem(item)" class="fa fa-minus"></i>
+                        <span>{{item.quantity}}</span>
+                        <i *ngIf="isBasket" (click)="incrementItem(item)" class="fa fa-plus"></i>
+                    </div>
+                </div>
+                <div class="col-1 text-center"><strong>{{item.price*item.quantity | currency}}</strong></div>
+                <div *ngIf="isBasket" class="col-1 text-center"><i (click)="deleteItem(item)" class="fa fa-trash" style="font-size: 1.5em;"></i></div>
+            </div>
+        </li>
+    </ul>
+</ng-container>

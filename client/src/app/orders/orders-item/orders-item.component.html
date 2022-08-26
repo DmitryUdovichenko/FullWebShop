@@ -1,0 +1,39 @@
+<div *ngIf="order" class="container pb-5">
+    <div class="row">
+        <div class="col-lg-9">
+            <ul class="list-group">
+                <li *ngFor="let item of order.orderItems" class="list-group-item">
+                    <div class="d-flex align-items-center">
+                        <img src="{{item.imageUrl}}" alt="" class="col-2" style="height: auto;">
+                        <div class="col-5">
+                            <h3 class="m-0">{{item.productName}}</h3>
+                        </div>
+                        <div class="col-2 text-center">{{item.price | currency}}</div>
+                        <div class="col-2 text-center">
+                            <div>
+                                <span>{{item.quantity}}</span>
+                            </div>
+                        </div>
+                        <div class="col-1 text-center"><strong>{{item.price*item.quantity | currency}}</strong></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-lg-3">
+            <div>
+                <div class="bg-secondary text-white px-3 py-3">
+                    <strong>Order Summary</strong>
+                </div>
+                <div class="bg-light px-3 py-3 border-bottom d-flex justify-content-between">
+                    <span>Subtotal:</span><strong>{{order.subtotal | currency}}</strong>
+                </div>
+                <div class="bg-light px-3 py-3 border-bottom d-flex justify-content-between">
+                    <span>Shipping:</span><strong>{{order.deliveryPrice | currency}}</strong>
+                </div>
+                <div class="bg-light px-3 py-3 d-flex justify-content-between">
+                    <span>Total:</span><strong>{{order.total | currency}}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

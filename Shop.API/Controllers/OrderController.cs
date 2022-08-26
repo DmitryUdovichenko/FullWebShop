@@ -37,7 +37,7 @@ namespace Shop.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<OrderDto>>> GetUserOrders()
+        public async Task<ActionResult<IReadOnlyList<OrderResponseDto>>> GetUserOrders()
         {
             var email = HttpContext.User.RetriveEmailFromPrincipal();
             var orders = await _orderService.GetUserOrdersAsync(email);

@@ -5,7 +5,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 import { SectionHeadeComponent } from './section-heade/section-heade.component';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'xng-breadcrumb';
 import { SharedModule } from '../shared/shared.module';
 
 
