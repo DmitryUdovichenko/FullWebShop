@@ -41,7 +41,7 @@ namespace Shop.API.Controllers
         {
             var email = HttpContext.User.RetriveEmailFromPrincipal();
             var orders = await _orderService.GetUserOrdersAsync(email);
-            return Ok(_mapper.Map<IReadOnlyList<Order>,IReadOnlyList<OrderResponseDto>>(orders));
+            return Ok(_mapper.Map<IReadOnlyList<Order>, IReadOnlyList<OrderResponseDto>>(orders));
         }
 
         [HttpGet("{id}")]

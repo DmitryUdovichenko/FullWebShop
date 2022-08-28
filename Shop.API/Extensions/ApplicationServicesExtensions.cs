@@ -13,6 +13,7 @@ namespace Shop.API.Extensions
         {
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));  
             services.AddScoped<IBasketRepository, BasketRepository>();

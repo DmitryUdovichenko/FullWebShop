@@ -28,6 +28,11 @@ services:
       - 8081:8081
     depends_on:
       - basketredis
+  stripe-cli:
+    container_name: stripe-cli
+    command: "listen --api-key ${STRIPE_API_KEY} --device-name ${STRIPE_DEVICE_NAME} --forward-to http://localhost:5001/payment/webhook/"
+    env_file:
+      - stripe_cli.env
       
 volumes:
   redis-data:

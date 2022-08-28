@@ -7,4 +7,5 @@ services:
     image: mcr.microsoft.com/mssql/server:2019-latest
   redis-commander:
     image: rediscommander/redis-commander:latest
-
+  stripe-cli:
+    image: stripe/stripe-cli:latest

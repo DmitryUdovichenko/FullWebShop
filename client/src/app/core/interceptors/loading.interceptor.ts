@@ -14,6 +14,9 @@ export class LoadingInterceptor implements HttpInterceptor {
   constructor(private loaderService: LoaderService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    if(request.method == "POST" && request.url.includes('order')){
+      return next.handle(request);
+    }
     this.loaderService.startSpin();
     return next.handle(request).pipe(
       finalize(() => {
