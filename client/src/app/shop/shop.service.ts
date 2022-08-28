@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IBrand } from '../shared/models/brand';
-import { IPagination } from '../shared/models/pagination';
+import { IPagination, Pagination } from '../shared/models/pagination';
 import { IProduct } from '../shared/models/product';
 import { IType } from '../shared/models/productType';
 import { ShopParams } from '../shared/models/shopParams';
@@ -13,55 +14,108 @@ import { ShopParams } from '../shared/models/shopParams';
 })
 export class ShopService {
   baseUrl = environment.apiHost;
+  products: IProduct[] = [];
+  brands: IBrand[];
+  types: IType[];
+  pagination = new Pagination();
+  shopParams = new ShopParams();
+  productCache = new Map();
+
   constructor(private http: HttpClient) { }
 
-  getProducts(shopParams: ShopParams)
+  getProducts(useCache: boolean)
   {
+    if(useCache == false){
+      this.productCache = new Map();
+    }
+
+    if(this.productCache.size > 0 && useCache == true){
+      if(this.productCache.has(Object.values(this.shopParams).join('-'))){
+          this.pagination.data = this.productCache.get(Object.values(this.shopParams).join('-'));
+          return of(this.pagination);
+      }
+    }
+
     let params = new HttpParams();
     
-    if(shopParams.brandId){
-      params = params.append("brandId", shopParams.brandId.toString());
+    if(this.shopParams.brandId){
+      params = params.append("brandId", this.shopParams.brandId.toString());
     }
     
-    if(shopParams.typeId){
-      params = params.append("typeId", shopParams.typeId.toString());
+    if(this.shopParams.typeId){
+      params = params.append("typeId", this.shopParams.typeId.toString());
     }
 
-    if(shopParams.sortType){
-      params = params.append("sort", shopParams.sortType);
+    if(this.shopParams.sortType){
+      params = params.append("sort", this.shopParams.sortType);
     }
 
-    if(shopParams.pageNumber){
-      params = params.append("pageIndex", shopParams.pageNumber);
+    if(this.shopParams.pageNumber){
+      params = params.append("pageIndex", this.shopParams.pageNumber);
     }
 
-    if(shopParams.pageSize){
-      params = params.append("pageSize", shopParams.pageSize);
+    if(this.shopParams.pageSize){
+      params = params.append("pageSize", this.shopParams.pageSize);
     }
     
-    if(shopParams.search){
-      params = params.append("search", shopParams.search);
+    if(this.shopParams.search){
+      params = params.append("search", this.shopParams.search);
     }
 
     return this.http.get<IPagination>(this.baseUrl+'product', {observe: 'response', params})
     .pipe(
       map(response =>{
-        return response.body;
+        this.productCache.set(Object.values(this.shopParams).join('-'),response.body.data);
+        this.pagination = response.body
+        return this.pagination;
       })
     )
   }
 
   getBrands()
   {
-    return this.http.get<IBrand[]>(this.baseUrl+'product/brands');
+    if(this.brands){
+      console.log("Brands",this.brands);
+      return of(this.brands);
+    }
+    return this.http.get<IBrand[]>(this.baseUrl+'product/brands').pipe(
+      map(response => {
+        this.brands = response;
+        return response;
+      })
+    );
   }
 
   getTypes()
   {
-    return this.http.get<IType[]>(this.baseUrl+'product/types');
+    if(this.types){
+      console.log("Types",this.types);
+      return of(this.types);
+    }
+    return this.http.get<IType[]>(this.baseUrl+'product/types').pipe(
+      map(response => {
+        this.types = response;
+        return response;
+      })
+    );
   }
 
   getProduct(id: number){
+    let product: IProduct;
+    this.productCache.forEach((products:IProduct[])=>{
+      product = products.find(x => x.id == id);
+    })
+    if(product)
+      return of(product);
+
     return this.http.get<IProduct>(this.baseUrl+'product/'+id);
+  }
+
+  setShopParams(params: ShopParams){
+    this.shopParams = params;
+  }
+
+  getShopParams(){
+    return this.shopParams;
   }
 }

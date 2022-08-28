@@ -11,6 +11,7 @@ namespace Shop.API.Extensions
     {
         public static IServiceCollection AddAplictionServices(this IServiceCollection services)
         {
+            services.AddSingleton<IResponseCacheService, ResponseCacheService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IPaymentService, PaymentService>();

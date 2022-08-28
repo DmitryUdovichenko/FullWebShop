@@ -60,7 +60,7 @@ namespace Shop.API.Controllers
             }
             catch (StripeException e)
             {
-                return BadRequest();
+                return BadRequest(new ApiResponse(400, "Payment Service problem"));
             }
         }
     }

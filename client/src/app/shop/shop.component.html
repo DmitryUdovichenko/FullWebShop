@@ -41,6 +41,7 @@
             [totalCount]="totalCount"
             [pageSize] = "shopParams.pageSize"
             (pageChanged)="onChangePage($event)"
+            [pageNumber] = "shopParams.pageNumber-1"
           ></app-pagination>
         </section>
     </div>

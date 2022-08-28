@@ -10,7 +10,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { FilterSelectComponent } from './components/filter-select/filter-select.component';
 import { OrderTotalsComponent } from './components/order-totals/order-totals.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { TextInputComponent } from './components/text-input/text-input.component';
 import { MatRadioModule } from '@angular/material/radio';
@@ -37,6 +37,7 @@ import { StepperComponent } from './components/stepper/stepper.component';
     MatButtonToggleModule,
     MatPaginatorModule,
     ReactiveFormsModule,
+    FormsModule,
     MatMenuModule,
     MatRadioModule,
     CdkStepperModule
@@ -58,7 +59,8 @@ import { StepperComponent } from './components/stepper/stepper.component';
     MatRadioModule,
     BasketSummaryComponent,
     CdkStepperModule,
-    StepperComponent
+    StepperComponent,
+    FormsModule
   ]
 })
 export class SharedModule { }
