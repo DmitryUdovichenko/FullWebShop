@@ -36,5 +36,11 @@ namespace Core.Specifications
             AddInclude(x => x.ProductBrand);
             AddInclude(x => x.ProductType);
         }
+
+        public ProductWithSpecification(string id) : base(x => x.CreatedBy == id)
+        {
+            AddInclude(x => x.ProductBrand);
+            AddInclude(x => x.ProductType); 
+        }
     }
 }

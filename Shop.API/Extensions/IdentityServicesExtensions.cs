@@ -11,9 +11,11 @@ namespace Shop.API.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, Role>()
             .AddEntityFrameworkStores<IdentityContext>()
             .AddSignInManager<SignInManager<User>>()
+            .AddRoleValidator<RoleValidator<Role>>()
+            .AddRoleManager<RoleManager<Role>>()
             .AddDefaultTokenProviders();
             services.AddAuthentication(options =>
             {

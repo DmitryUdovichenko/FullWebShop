@@ -1,5 +1,6 @@
 using Core.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Providers;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +13,12 @@ namespace Shop.API.Extensions
         public static IServiceCollection AddAplictionServices(this IServiceCollection services)
         {
             services.AddSingleton<IResponseCacheService, ResponseCacheService>();
+            services.AddHttpContextAccessor();
+            services.AddScoped<IUserIdProvider, UserIdProvider>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IFileUploadService, FileUploadService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));  
             services.AddScoped<IBasketRepository, BasketRepository>();

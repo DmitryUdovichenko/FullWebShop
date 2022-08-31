@@ -27,11 +27,11 @@ export class ShopComponent implements OnInit {
 
   constructor(private shopService: ShopService) { 
     this.shopParams = this.shopService.getShopParams();
-    console.log("ShopParams", this.shopParams);
+    this.shopParams.isAdmin = false;
   }
 
   ngOnInit(): void {
-    this.getProducts(true);
+    this.getProducts(false);
     this.getBrands();
     this.getTypes();
   }

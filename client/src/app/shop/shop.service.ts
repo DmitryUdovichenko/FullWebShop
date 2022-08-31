@@ -23,7 +23,7 @@ export class ShopService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(useCache: boolean)
+  getProducts(useCache: boolean, path = 'product')
   {
     if(useCache == false){
       this.productCache = new Map();
@@ -62,7 +62,11 @@ export class ShopService {
       params = params.append("search", this.shopParams.search);
     }
 
-    return this.http.get<IPagination>(this.baseUrl+'product', {observe: 'response', params})
+    if(this.shopParams.isAdmin){
+      params = params.append("isadmin", this.shopParams.isAdmin);
+    }
+
+    return this.http.get<IPagination>(this.baseUrl+path, {observe: 'response', params})
     .pipe(
       map(response =>{
         this.productCache.set(Object.values(this.shopParams).join('-'),response.body.data);

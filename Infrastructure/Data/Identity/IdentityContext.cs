@@ -2,15 +2,18 @@
 using System.Reflection;
 using Core.Entities;
 using Core.Entities.Identity;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Identity
 {
-    public class IdentityContext : IdentityDbContext<User>
+    public class IdentityContext : IdentityDbContext<User, Role, string>
     {
-        public IdentityContext(DbContextOptions<IdentityContext> options) : base(options)
+        private readonly IUserIdProvider _userIdProvider;
+        public IdentityContext(DbContextOptions<IdentityContext> options, IUserIdProvider userIdProvider) : base(options)
         {
+            _userIdProvider = userIdProvider;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,11 +30,11 @@ namespace Infrastructure.Data.Identity
                 {
                     case EntityState.Modified:
                         entry.Entity.LastMidofiedDate = DateTime.Now;
-                        entry.Entity.LastMidofiedBy = "test";
+                        entry.Entity.LastMidofiedBy = _userIdProvider.UserId;
                         break;
                     case EntityState.Added:
                         entry.Entity.CreatedDate = DateTime.Now;
-                        entry.Entity.CreatedBy = "test";
+                        entry.Entity.CreatedBy = _userIdProvider.UserId;
                         break;
                 }
             }

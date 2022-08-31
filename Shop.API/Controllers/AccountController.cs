@@ -34,7 +34,7 @@ namespace Shop.API.Controllers
             return new UserDto
             {
                 Email = user.Email,
-                Token = _tokenService.CreateToken(user),
+                Token = await _tokenService.CreateToken(user),
                 DisplayName = user.DisplayName
             };
 
@@ -79,8 +79,9 @@ namespace Shop.API.Controllers
             return new UserDto
             {
                 Email = user.Email,
-                Token = _tokenService.CreateToken(user),
-                DisplayName = user.DisplayName
+                Token = await _tokenService.CreateToken(user),
+                DisplayName = user.DisplayName,
+                Key = user.Id
             };
 
         }
@@ -104,10 +105,14 @@ namespace Shop.API.Controllers
 
             if(!result.Succeeded) return BadRequest(new ApiResponse(400));
 
+            var roleAddResult = await _userManager.AddToRoleAsync(user, "Member");
+            
+            if (!roleAddResult.Succeeded) return BadRequest(new ApiResponse(400));
+
             return new UserDto
             {
                 DisplayName = user.DisplayName,
-                Token = _tokenService.CreateToken(user),
+                Token = await _tokenService.CreateToken(user),
                 Email = user.Email
             };
         }

@@ -1,5 +1,7 @@
 ﻿using Core.Entities;
 using Core.Entities.OrderAggregate;
+using Core.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -7,9 +9,11 @@ namespace Infrastructure.Data
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
-        {
+        private readonly IUserIdProvider _userIdProvider;
 
+        public DataContext(DbContextOptions<DataContext> options, IUserIdProvider userIdProvider) : base(options)
+        {
+            _userIdProvider = userIdProvider;
         }
 
         public DbSet<Product> Products { get; set; }
@@ -32,11 +36,11 @@ namespace Infrastructure.Data
                 {
                     case EntityState.Modified:
                         entry.Entity.LastMidofiedDate = DateTime.Now;
-                        entry.Entity.LastMidofiedBy = "test";
+                        entry.Entity.LastMidofiedBy = _userIdProvider.UserId;
                         break;
                     case EntityState.Added:
                         entry.Entity.CreatedDate = DateTime.Now;
-                        entry.Entity.CreatedBy = "test";
+                        entry.Entity.CreatedBy = _userIdProvider.UserId;
                         break;
                 }
             }

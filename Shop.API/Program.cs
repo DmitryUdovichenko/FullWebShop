@@ -7,6 +7,7 @@ using Shop.API.Extensions;
 using Shop.API.Mapper;
 using Shop.API.Middleware;
 using StackExchange.Redis;
+using Role = Core.Entities.Identity.Role;
 
 var  CorsPolicy = "AllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -54,9 +55,10 @@ using (var scope = app.Services.CreateScope())
         await DataContaxtSeed.SeedAsync(context, loggerFactory);
 
         var userManager = services.GetRequiredService<UserManager<User>>();
+        var roleManager = services.GetRequiredService<RoleManager<Role>>();
         var identityContext = services.GetRequiredService<IdentityContext>();
         await identityContext.Database.MigrateAsync();
-        await IdentityContextSeed.SeedAsync(userManager);
+        await IdentityContextSeed.SeedAsync(userManager, roleManager);
     }
     catch (Exception ex)
     {

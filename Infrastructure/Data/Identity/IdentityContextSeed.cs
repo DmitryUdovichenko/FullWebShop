@@ -5,33 +5,51 @@ namespace Infrastructure.Data.Identity
 {
     public class IdentityContextSeed
     {
-        public static async Task SeedAsync(UserManager<User> userManager)
+        public static async Task SeedAsync(UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             
             if(!userManager.Users.Any())
             {
-                
-                var user = new User
+                var users = new List<User>
                 {
-                    UserName = "Testing",
-                    DisplayName = "Tom",
-                    Email = "Tom@website.com",
-                    Address = new Address
+                    new User
                     {
-                        FirstName = "Tom",
-                        LastMidofiedBy = "Tomily",
-                        Street = "Street",
-                        City = "City",
-                        PostCode = "55555"
+                        UserName = "Testing",
+                        DisplayName = "Tom",
+                        Email = "Tom@website.com",
+                        Address = new Address
+                        {
+                            FirstName = "Tom",
+                            LastMidofiedBy = null,
+                            Street = "Street",
+                            City = "City",
+                            PostCode = "55555"
+                        }
+                    },
+                    new User
+                    {
+                        DisplayName = "Admin",
+                        Email = "admin@test.com",
+                        UserName = "Admin"
                     }
                 };
-                var answer = await userManager.CreateAsync(user, "Test$123456");  
-                            
-                if(!answer.Succeeded){
-                    foreach (var item in answer.Errors)
-                    {
-                        Console.WriteLine($"-> {item.Description}");
-                    }
+
+                var roles = new List<Role>
+                {
+                    new Role {Name = "Admin"},
+                    new Role {Name = "Member"}
+                };
+
+                foreach (var role in roles)
+                {
+                    await roleManager.CreateAsync(role);
+                }
+
+                foreach (var user in users)
+                {
+                    await userManager.CreateAsync(user, "Test$123456");
+                    await userManager.AddToRoleAsync(user, "Member");
+                    if (user.Email == "admin@test.com") await userManager.AddToRoleAsync(user, "Admin");
                 }
             }
         }

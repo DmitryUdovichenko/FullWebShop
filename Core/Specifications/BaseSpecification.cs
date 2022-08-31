@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Core.Specifications
 {
@@ -30,6 +26,8 @@ namespace Core.Specifications
         public int Skip { get; private set;}
 
         public bool IsPagingEnabled { get; private set;}
+
+        public bool UserId { get; private set;}
 
         protected void AddInclude(Expression<Func<T, object>> includeExpression)
         {

@@ -5,4 +5,5 @@ export class ShopParams{
     pageNumber = 1;
     pageSize = 4;
     search: string;
+    isAdmin = false;
 }
